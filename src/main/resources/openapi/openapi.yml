@@ -1,0 +1,126 @@
+openapi: 3.0.1
+info:
+  title: Currency Conversion API
+  description: API para la conversión de monedas entre dos tipos de divisas con soporte de caching, JWT y programación reactiva.
+  version: 1.0.0
+  contact:
+    name: Soporte
+    email: soporte@currencyapi.com
+
+servers:
+  - url: http://localhost:8080/api
+    description: Servidor local
+
+paths:
+  /conversion:
+    post:
+      summary: Convertir moneda
+      description: Convierte un monto de una moneda a otra usando un tipo de cambio obtenido de una fuente externa.
+      operationId: convertCurrency
+      requestBody:
+        description: Parámetros necesarios para realizar la conversión.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  description: Monto a convertir.
+                  example: 100
+                from:
+                  type: string
+                  description: Código de la moneda de origen (por ejemplo, USD).
+                  example: USD
+                to:
+                  type: string
+                  description: Código de la moneda de destino (por ejemplo, EUR).
+                  example: EUR
+              required:
+                - amount
+                - from
+                - to
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: Token JWT para autenticación.
+          schema:
+            type: string
+            example: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+      responses:
+        '200':
+          description: Conversión de moneda realizada con éxito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  amount:
+                    type: number
+                    description: Monto original enviado.
+                    example: 100
+                  convertedAmount:
+                    type: number
+                    description: Monto convertido según el tipo de cambio.
+                    example: 110
+                  from:
+                    type: string
+                    description: Moneda de origen.
+                    example: USD
+                  to:
+                    type: string
+                    description: Moneda de destino.
+                    example: EUR
+                  rate:
+                    type: number
+                    description: Tipo de cambio aplicado.
+                    example: 1.10
+        '400':
+          description: Parámetros inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Descripción del error.
+                    example: "Invalid request parameters"
+        '401':
+          description: No autorizado (JWT inválido o no presente)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Descripción del error de autenticación.
+                    example: "Invalid or missing JWT token"
+        '500':
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Mensaje del error.
+                    example: "Internal server error"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: Currency Conversion
+    description: Operaciones relacionadas con la conversión de moneda.
