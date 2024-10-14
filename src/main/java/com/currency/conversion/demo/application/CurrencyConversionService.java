@@ -7,7 +7,6 @@ import com.currency.conversion.demo.application.usecase.CurrencyConversionUseCas
 import com.currency.conversion.demo.domain.exception.RateAlreadyConvertedException;
 import com.currency.conversion.demo.domain.exception.RateNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
