@@ -5,7 +5,6 @@ import com.currency.conversion.demo.adapter.dto.res.CurrencyConversionResponse;
 import com.currency.conversion.demo.application.port.input.CurrencyConversionInputPort;
 import com.currency.conversion.demo.application.usecase.CurrencyConversionUseCase;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 

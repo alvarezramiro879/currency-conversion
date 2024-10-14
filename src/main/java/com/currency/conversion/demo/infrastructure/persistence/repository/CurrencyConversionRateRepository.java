@@ -9,7 +9,6 @@ import java.math.BigInteger;
 
 public interface CurrencyConversionRateRepository extends R2dbcRepository<CurrencyConversionRate, String> {
 
-  //@Query("SELECT * FROM currency_conversion_rate WHERE fromCurrency = :fromCurrency AND toCurrency = :toCurrency")
   Mono<CurrencyConversionRate> findByFromCurrencyAndToCurrency(String fromCurrency, String toCurrency);
 
   Mono<CurrencyConversionRate> findById(Integer id);
